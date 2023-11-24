@@ -16,34 +16,16 @@ Currently, our clustering pipeline consists of UMAP for dimensionality reduction
 We are currently working on adding a hierarchical clustering step that takes place after the completion of each hyparam combination's resulting model. This further stage aims to refine the clustering process, enhancing the granularity and accuracy of the results.
 """
 
-import argparse
-from copy import deepcopy
 from hdbscan import HDBSCAN
 from umap import UMAP
 import torch
-import torch.optim as optim
-import random
-from tqdm import tqdm
-import gzip
 import numpy as np
-from pathlib import Path
-from os.path import join as pathjoin
-import requests
-import json
-from itertools import chain
-import re
-from random import shuffle
 import pandas as pd
-import math
+from random import shuffle
 import os
-import scipy
-import numpy as np
+from copy import deepcopy
+from os.path import join as pathjoin
 import itertools
-from scipy.stats import zscore
-from sklearn.cluster import AgglomerativeClustering
-from matplotlib import pyplot as plt
-import faiss
-from scipy.sparse import csr_matrix, save_npz, load_npz
 from scipy.spatial.distance import cdist
 from scipy.cluster.hierarchy import linkage, fcluster
 from sklearn.metrics import silhouette_score
