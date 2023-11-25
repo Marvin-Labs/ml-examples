@@ -33,6 +33,8 @@ An example output:
 This represents the document:
 
 “In a highly competitive wireless market, our connections growth and churn rates signal that customers are attracted to our network superiority and reliability, as well as our unique product offerings,” Dunne said. “We enter 2019 excited about the possibilities that 5G will bring, and confident that customers will benefit from the best products, on the best plans, on the best network.”
+
+To query ChatGPT using the load balancer object as we do here, you would need OpenAI and Azure API key, as well as an Azure API Base.
 """
 
 import lbgpt
@@ -40,6 +42,11 @@ import diskcache
 import pandas as pd
 import jinja2
 import asyncio
+
+OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY'
+AZURE_OPENAI_API_KEY = 'YOUR_AZURE_OPENAI_API_KEY'
+AZURE_OPENAI_API_BASE = 'YOUR_AZURE_OPENAI_API_BASE'
+
 
 # A jinja2 environment to render the prompt
 temp_env = jinja2.Environment(
