@@ -168,7 +168,7 @@ pembs = embed(pred_types)
 # Now we run clustering with several hyparam choices to compare them and choose the best one
 # KMeans is one of the simplest ways to cluster for demonstration purposes,
 # but the optimal cllustering scheme changes massively depending on the application.
-from sklearn import KMeans
+from sklearn.cluster import KMeans
 
 # NP labels
 labels = KMeans(n_clusters=40).fit_predict(nembs)
