@@ -147,7 +147,7 @@ embed = embed_finbert # replace with your favorite embedding function (it should
 # This is tangential to our overall point in this example,
 # but we need to filter out legal statements so we've built a classifier that does that.
 from pickle import load
-with open('output/is_business_rf_classifier.pkl','rb') as f:
+with open('models/is_business_rf_classifier.pkl','rb') as f:
     is_business_classifier = load(f)
 
 # Load any other saved database that was generated using the thematic prompt
