@@ -3,11 +3,11 @@ This script demonstrates the handling of a thematic database as created by creat
 
 The json dataset is first parsed so that we have a list of documents each mapped to an event which is a dictionary from thematic roles to their content, and from 'predicate' to the event's predicate (usually the main verb).
 
-We then collect (i) all the possible contents of the most important thematic roles (we call them NPs, or noun phrases), because this is what they usually are, and (ii) all predicates, and embed all of them using some embedding model. In this example we are using finbert, because we are using financial data for the example, but you can use any embedding model which suits your data.
+We then collect (i) all the possible contents of the most important thematic roles (we call them NPs, or noun phrases), because this is what they usually are, and (ii) all predicates, and embed all of them using some embedding model.
 
+In this example we are using finbert, because we are using financial data for the example, but you can use any embedding model which suits your data.
 
-
-
+The contents are then clustered, and event likelihood is calculated based on role/cluster coocurrence frequencies.
 """
 
 
