@@ -114,6 +114,8 @@ docs = dataset.shuffle().select(range(100))['text']
 db = thematize(docs)
 
 # Save database
+import os
+os.makedirs('output', exist_ok=True)
 source2db = {c:r for c,r in zip(contents, db)}
 json.dump(source2db, open(f'output/{dataset_name}.json','w'))
 
