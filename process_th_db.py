@@ -144,15 +144,9 @@ def embed_finbert(docs):
 
 embed = embed_finbert # replace with your favorite embedding function (it should take an iterable of strings and return a matrix)
 
-# This is tangential to our overall point in this example,
-# but we need to filter out legal statements so we've built a classifier that does that.
-from pickle import load
-with open('models/is_business_rf_classifier.pkl','rb') as f:
-    is_business_classifier = load(f)
-
-# Load any other saved database that was generated using the thematic prompt
-ID = '64d11d67b8a4a9b9e363ceac'
-dataset_name = f'mng-rep-{ID}'
+# Load any saved database that was generated using the thematic prompt
+# here we use the one we created in create_th_db.py
+dataset_name = ag_news
 source2db = json.load(open(f'output/{dataset_name}-them.json','r'))
 
 docs = list(source2db.keys())
