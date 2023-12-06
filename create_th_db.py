@@ -105,8 +105,9 @@ def thematize(docs):
 
 # Load the documents you would like to use
 # Here we use 100 documents from the AG News dataset as an example
+dataset_name = 'ag_news'
 from datasets import load_dataset
-dataset = load_dataset("ag_news", split="train")
+dataset = load_dataset(dataset_name, split="train")
 docs = dataset.shuffle().select(range(100))['text']
 
 # Create the database
@@ -114,5 +115,5 @@ db = thematize(docs)
 
 # Save database
 source2db = {c:r for c,r in zip(contents, db)}
-json.dump(source2db, open(f'output/mng-rep-{ID}-them.json','w'))
+json.dump(source2db, open(f'output/{dataset_name}.json','w'))
 
