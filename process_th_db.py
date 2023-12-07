@@ -5,7 +5,7 @@ The json dataset is first parsed so that we have a list of documents each mapped
 
 We then collect (i) all the possible contents of the most important thematic roles (we call them NPs, or noun phrases), because this is what they usually are, and (ii) all predicates, and embed all of them using some embedding model.
 
-In this example we are using finbert, because we are using financial data for the example, but you can use any embedding model which suits your data.
+In this example we are using distilbert-base-uncased, which is a simple yet effective embedding model, but you can use any model which suits your application.
 
 The contents are then clustered, and event likelihood is calculated based on role/cluster coocurrence frequencies.
 """
@@ -139,14 +139,14 @@ def embs_from_docs_pipeline(docs,embedding_model):
 
 def embed_finbert(docs):
     """Use the embedding function with the finbert model."""
-    pl = pipeline('feature-extraction', 'yiyanghkust/finbert-tone', device='cuda:0')
+    pl = pipeline('feature-extraction', 'distilbert-base-uncased', device='cuda:0')
     return embs_from_docs_pipeline(docs,pl)
 
 embed = embed_finbert # replace with your favorite embedding function (it should take an iterable of strings and return a matrix)
 
 # Load any saved database that was generated using the thematic prompt
 # here we use the one we created in create_th_db.py
-dataset_name = ag_news
+dataset_name = 'ag_news'
 source2db = json.load(open(f'output/{dataset_name}-them.json','r'))
 
 docs = list(source2db.keys())
