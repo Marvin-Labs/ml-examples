@@ -16,19 +16,20 @@ Currently, our clustering pipeline consists of UMAP for dimensionality reduction
 We are currently working on adding a hierarchical clustering step that takes place after the completion of each hyparam combination's resulting model. This further stage aims to refine the clustering process, enhancing the granularity and accuracy of the results.
 """
 
-from hdbscan import HDBSCAN
-from umap import UMAP
-import torch
-import numpy as np
-import pandas as pd
-from random import shuffle
+import itertools
 import os
 from copy import deepcopy
 from os.path import join as pathjoin
-import itertools
+from random import shuffle
+
+import numpy as np
+import pandas as pd
+import torch
+from hdbscan import HDBSCAN
+from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.spatial.distance import cdist
-from scipy.cluster.hierarchy import linkage, fcluster
 from sklearn.metrics import silhouette_score
+from umap import UMAP
 
 
 def linspace_without_duplicates(*args, **kwargs):
@@ -44,6 +45,7 @@ def linspace_without_duplicates(*args, **kwargs):
     linspace = np.linspace(*args, **kwargs)
     return list(set(linspace))
 
+
 def prettify(param):
     """
     Format a parameter for display, truncating floats to 4 decimal places.
@@ -55,6 +57,7 @@ def prettify(param):
     Formatted parameter.
     """
     return f'{param:.4f}' if isinstance(param, float) else param
+
 
 def label_stats(labels, display=True, unlabels=1):
     """
@@ -69,7 +72,7 @@ def label_stats(labels, display=True, unlabels=1):
     List of statistics [total, outliers, max_size, min_size, mean, std].
     """
     counts = np.array([(labels == i).sum() for i in np.unique(labels)])[unlabels:]
-    total = len(counts)-unlabels
+    total = len(counts) - unlabels
     outliers = (labels == -1).sum()
     max_size = int(np.max(counts))
     min_size = int(np.min(counts))
@@ -77,7 +80,7 @@ def label_stats(labels, display=True, unlabels=1):
     std = counts.std()
     if display:
         print('Final label count stats:')
-        print('#labels:', len(counts)-unlabels)
+        print('#labels:', len(counts) - unlabels)
         print('#outliers:', (labels == -1).sum())
         print('max:', int(np.max(counts)))
         print('min:', int(np.min(counts)))
@@ -120,15 +123,15 @@ def label_stats(labels, display=True, unlabels=1):
 #     return reduced
 
 def cluster_cycle(vecs,
-                  n_components =5 ,
+                  n_components=5,
                   n_neighbors=100,
-          metric='cosine',
-          min_dist=.1,
-          spread = 1,
-          cluster_selection_epsilon = .2, alpha = .7,
-          cluster_selection_method = 'leaf', prediction_data = True,
-          min_cluster_size=40,
-          max_cluster_size=400):
+                  metric='cosine',
+                  min_dist=.1,
+                  spread=1,
+                  cluster_selection_epsilon=.2, alpha=.7,
+                  cluster_selection_method='leaf', prediction_data=True,
+                  min_cluster_size=40,
+                  max_cluster_size=400):
     """
     Perform clustering on vectors using UMAP for dimensionality reduction and HDBSCAN for clustering.
 
@@ -203,7 +206,7 @@ def iter_cluster(vecs,
                  alpha=.1,
                  cluster_selection_method='eom',
                  prediction_data=False,
-                 stop_frac = 10):
+                 stop_frac=10):
     """
     Iteratively cluster a dataset using UMAP and HDBSCAN with the specified parameters.
 
@@ -262,7 +265,7 @@ def iter_cluster(vecs,
         n_clusters = np.unique(labels).shape[0] - 1
 
         print('\n# clusters:', n_clusters)
-        print('# leftovers:', (labels == -1).sum(),'\n')
+        print('# leftovers:', (labels == -1).sum(), '\n')
 
         # Update cycle count and check for termination
         n_cycle += 1
@@ -282,9 +285,10 @@ def iter_cluster(vecs,
 
     return final_labels
 
-def iter_cluster_gridsearch(vecs,dataset_name, n_combs=20, cache=False,
+
+def iter_cluster_gridsearch(vecs, dataset_name, n_combs=20, cache=False,
                             stop_frac=10, collapse_threshold_stds=3, hp_num=5,
-                            min_cluster_size_min=5, min_cluster_size_max = 50,
+                            min_cluster_size_min=5, min_cluster_size_max=50,
                             max_cluster_size_min=20, max_cluster_size_max=500,
                             n_components_min=3, n_components_max=100,
                             n_neighbors_min=10, n_neighbors_max=100,
@@ -427,8 +431,8 @@ def iter_cluster_gridsearch(vecs,dataset_name, n_combs=20, cache=False,
     # Return the DataFrame containing all the results
     return df
 
-def ensemble_consensus(dataset_name):
 
+def ensemble_consensus(dataset_name):
     paths = os.listdir(f'output/{dataset_name}-labels')
     item_labels = [np.load(f'output/{dataset_name}-labels/{path}') for path in paths]
 
@@ -448,13 +452,14 @@ def ensemble_consensus(dataset_name):
     # Try different thresholds and see how they affect the final result.
     # Higher threshold=less clusters. Roughly speaking, pick the threshold
     # that gives you the number of thresholds you want and with the highest silhouette score
-    for t in [1,2,3,4,5,6,7]:
+    for t in [1, 2, 3, 4, 5, 6, 7]:
         Z = linkage(co_association_matrix, method='average')
         consensus_cluster_labels = fcluster(Z, t=t, criterion='distance')
         np.fill_diagonal(co_association_matrix, 0)
         silhouette_avg = silhouette_score(co_association_matrix, consensus_cluster_labels, metric='precomputed')
 
-        print(t,(np.unique(consensus_cluster_labels).shape)[0], silhouette_avg)
+        print(t, (np.unique(consensus_cluster_labels).shape)[0], silhouette_avg)
+
 
 def pipeline_example():
     N = 1000
@@ -471,8 +476,8 @@ def pipeline_example():
     # on cluster distribution and revise hyparam combination choices accordingly
     # to fit your application.
 
-
     ensemble_consensus(dataset_name)
+
 
 if __name__ == '__main__':
     pipeline_example()
