@@ -1,8 +1,7 @@
 """
 This script demonstrates the handling of a thematic database as created by create_th_db.py.
 
-The json dataset is first parsed so that we have a list of documents each mapped to an event which is a dictionary
-from thematic roles to their content, and from 'predicate' to the event's predicate (usually the main verb).
+The json dataset is first parsed so that we have a dictionary mapping a document to a list of event representations of the sentences in that document. An event is a dictionary from thematic roles (one of which is a predicate, or the main verb) to the strings which assume that role in the event.
 
 We then collect (i) all the possible contents of the most important thematic roles (we call them NPs, or noun phrases),
 because this is what they usually are, and (ii) all predicates, and embed all of them using some embedding model.
