@@ -6,6 +6,12 @@ Interest in (and usefulness of) language models is skyrocketing right now, and m
 
 We provide a few examples of to use ChatGPT and other tools to explore the world of language models and linguistics.
 
+Current scripts:
+
+* `create_th_db.py`: Creating a database of thematic role event representations out of free text.
+* `process_th_db.py`: Translate the database into python dictionaries and perform various generic operations on them.
+* `iter_cluster.py`: A clustering scheme based on iterative reclustering of outliers.  
+
 ## Who Are We: Marvin Labs
 
 We are the team of [MarvinLabs](https://marvin-labs.com/). We are building MarvinLabs as an AI-powered assistant that helps analysts parse all these thousands of pages of text, identify relevant highlights, provide summaries, and evaluate the hidden sentiment. We are leveraging the substantive advances in large language models made over the last year to turn text into high-quality insights.
