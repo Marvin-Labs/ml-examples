@@ -36,24 +36,22 @@ This represents the document:
 
 To query ChatGPT using the load balancer object as we do here, you would need OpenAI and Azure API key, as well as an Azure API Base.
 """
-import json
 
 import lbgpt
 import diskcache
 import pandas as pd
-import os
-
 import jinja2
 import asyncio
-from datasets import load_dataset
+import json
 
 OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY'
 AZURE_OPENAI_API_KEY = 'YOUR_AZURE_OPENAI_API_KEY'
 AZURE_OPENAI_API_BASE = 'YOUR_AZURE_OPENAI_API_BASE'
 
+
 # A jinja2 environment to render the prompt
 temp_env = jinja2.Environment(
-    loader=jinja2.FileSystemLoader('prompts'),
+    loader=jinja2.FileSystemLoader('../prompts'),
     autoescape=jinja2.select_autoescape(),
 )
 
@@ -63,13 +61,12 @@ chatgpt = lbgpt.LoadBalancedGPT(
     openai_api_key=OPENAI_API_KEY,
     azure_api_key=AZURE_OPENAI_API_KEY,
     azure_api_base=AZURE_OPENAI_API_BASE,
-    cache=cache,
     azure_model_map={
-        "gpt-3.5-turbo-0613": "gpt-35-turbo-0613",
-        "gpt-3.5-turbo": "gpt-35-turbo-0613",
-        "gpt-4": "gpt-4-0613",
-        "gpt-4-0613": "gpt-4-0613",
-    },
+    "gpt-3.5-turbo-0613": "gpt-35-turbo-0613",
+    "gpt-3.5-turbo": "gpt-35-turbo-0613",
+    "gpt-4": "gpt-4-0613",
+    "gpt-4-0613": "gpt-4-0613",
+},
 )
 
 
@@ -82,12 +79,13 @@ def thematize(docs):
     # Create a list of queries, one for each doc
     comp_list = []
     for doc in docs:
+
         d = {
             # Use the jinja2 environment to render the prompt
             # both from the user side (the argument, which is doc),
             # and the system side, which is the instruction to chatgpt.
-            'messages': [
-                {'role': 'system',
+            'messages' : [
+                {'role':'system',
                  'content':
                      temp_env.get_template('system_thematic.jinja2').render()},
                 {'role': 'user',
@@ -102,20 +100,19 @@ def thematize(docs):
         comp_list.append(d)
 
     # Perform the querrying using the LoadBalancedGPT object
+    cache = diskcache.Cache('cache')
     outs = asyncio.run(chatgpt.chat_completion_list(comp_list))
     return [out.choices[0].message['content'] for out in outs]
 
-
 # Load the documents you would like to use
 # Here we use 100 documents from the AG News dataset as an example
-dataset_name = 'ag_news'
-dataset = load_dataset(dataset_name, split="train")
+from datasets import load_dataset
+dataset = load_dataset("ag_news", split="train")
 docs = dataset.shuffle().select(range(100))['text']
 
 # Create the database
 db = thematize(docs)
 
 # Save database
-os.makedirs('output', exist_ok=True)
-source2db = {c: r for c, r in zip(docs, db)}
-json.dump(source2db, open(f'output/{dataset_name}.json', 'w'))
+source2db = {c:r for c,r in zip(docs, db)}
+json.dump(source2db, open(f'data/ag-news-100-them.json','w'))
