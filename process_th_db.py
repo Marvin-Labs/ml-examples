@@ -1,6 +1,8 @@
 """
 This script demonstrates the handling of a thematic database as created by create_th_db.py.
 
+A sample such database is given in data/ag-news-100-them.json.
+
 The json dataset is first parsed so that we have a list of documents each mapped to an event which is a dictionary from thematic roles to their content, and from 'predicate' to the event's predicate (usually the main verb).
 
 We then collect (i) all the possible contents of the most important thematic roles (we call them NPs, or noun phrases), because this is what they usually are, and (ii) all predicates, and embed all of them using some embedding model.
