@@ -139,13 +139,11 @@ def embs_from_docs_pipeline(docs,embedding_model):
                 trunc-=100
     return torch.stack(embs)
 
-def embed_hypernym(docs):
+# replace with your favorite embedding function (it should take an iterable of strings and return a matrix)
+def embed(docs):
     """Use the embedding function with the finbert model."""
-    pl = pipeline('feature-extraction', 'sohomghosh/LIPI_FinSim3_Hypernym', device='cuda:0')
+    pl = pipeline('feature-extraction', 'distilbert-base-uncased', device='cuda:0')
     return embs_from_docs_pipeline(docs,pl)
-
-embed = embed_hypernym # replace with your favorite embedding function (it should take an iterable of strings and return a matrix)
-
 
 source2db = json.load(open(f'data/ag-news-100-them.json','r'))
 
