@@ -162,27 +162,14 @@ class Duologue(Conversation):
             open(self.log_path, 'w').close()
 
         history_path = f'{campaign}/db/logs/{self.id}_plain.txt'
-        # if os.path.exists(history_path):
-        #     self.history = [l.strip() for l in open(history_path).readlines()]
-        #     init_res_named = self.history[-1]
-        # else:
-        #     init_res_named = f"{self.agent2.name.capitalize()}: tell me whats on your mind."
-        #     self.history = [init_res_named]
+      
 
         self.history = []
-        # topic = self.agent2.pick_topic_from_stm(self.cg, self.agent1.name)
-        # res2 = 'Tell me about ' + topic
+        
         topic = f"how is {self.agent1.name} doing"
         self.agent1.qud = self.agent2.qud = topic
         res2 = f"{self.agent2.name}: Tell me what's on your mind, {self.agent1.name}."
-        # res_prompt = response_instructions.replace('<KB>', self.agent2.kb).replace('<QUD>', topic).replace('<CG>', '\n'.join(self.history)[-max_history_length:]).replace(
-        #     '<SELF_NAME>', self.agent2.name).replace('<OTHER_NAME>', self.agent1.name).replace('<PERSONALITY>', self.agent2.personality).replace('<PREVIOUS_MESSAGE>', init_res_named)
-        #
-        # res2 = query_chatgpt(res_prompt)
 
-        # self.history.append(res1)
-
-        # res2 = self.agent2.respond(self.agent1.name, '', res1, True, self.cg, self.log_path)
         res2_named = f"{self.agent2.name.capitalize()}: {res2}"
         self.history.append(res2_named)
         self.agent2.print(res2_named)
