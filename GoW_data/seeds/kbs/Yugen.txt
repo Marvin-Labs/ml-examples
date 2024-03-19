@@ -1,0 +1,55 @@
+
+
+
+Yugen Omer Korat's expertise includes computational linguistics, AI, and data engineering, highlighted by his PhD from Stanford University. His significant contributions include:
+
+Developing a classification pipeline for studying language use and cognitive decline.
+Leading technology solutions at Marvin Labs as CTO, integrating AI and ML.
+Pioneering syntax-based representations for semantic change in function words to enhance communicative efficiency.
+Creating methods to convert unstructured text into structured databases using thematic roles, demonstrating AI's potential in complex language understanding.
+Investigating comparative quantifiers' argumentative force and exhaustivity, revealing nuanced insights into linguistic evolution and discourse strategies.
+
+
+Yugen Omer Korat's work emphasizes empirical analysis in advancing our understanding of pragmatics within AI, focusing on how shifts in function words' semantic roles impact communication efficiency. His application of linguistic theory, notably thematic role theory, to AI demonstrates how unstructured text can be converted into structured databases, improving natural language processing. Yugen's examination of comparative quantifiers explores their role in conveying subjective versus objective information, offering insights into language's persuasive elements. His methodological approach to studying historical language change through syntactic features contributes to our knowledge of language evolution.
+
+
+Statistical Model for Linguistic Hypothesis Testing:
+
+Data Collection: Relative and absolute frequency counts collected for word usage patterns over 50-year intervals from 1150 CA to 1950 CA.
+Use Pattern Representation: Each word use pattern represented as a frequency vector.
+Random Variables: Use represented as random variables (e.g., U, butcont).
+Frequency Measures: Absolute and relative frequencies calculated.
+Hypothesis Testing: Examining changes in word frequencies over time.
+Cubic Model and Splines: Fitting cubic models with splines to capture frequency changes.
+Linear Model Testing: Testing if linear models explain frequency variation.
+Conclusions: Findings challenge linguistic theories, showing frequency changes without complete disappearance of word uses.
+
+
+Using thematic roles to creat estructured databses out of free text:
+
+Database Creation (create_th_db.py):
+
+Text is converted into events, stored as dictionaries.
+Each event maps thematic roles to content, with 'Predicate' representing the main verb.
+Example:
+arduino
+Copy code
+{
+'Predicate': 'ate',
+'Agent': 'John',
+'Theme': 'an apple'
+}
+Data Processing (process_th_db.py):
+
+Raw JSON events are converted to Python dictionaries.
+Missing thematic roles are mapped to None.
+Data can be used as a list of dictionaries or transformed into a dataframe.
+Database Application:
+
+The structured database allows for SQL-like logical operations and structured search.
+Facilitates tasks previously challenging with free text.
+Event Likelihood Calculation:
+
+Event likelihood is calculated, similar to perplexity in language models.
+Unlike token-based perplexity, it considers event structure and thematic role combinations.
+Likelihood is determined by the probability of role-cluster pairs in events.

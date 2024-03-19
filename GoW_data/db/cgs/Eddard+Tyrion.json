@@ -1,0 +1,51 @@
+{
+  "Tyrion's Arc" :
+
+          [
+          "The weapon used in the attempt on Bran’s life was traced back to Tyrion",
+          'Catelyn Stark arrested Tyrion based on the belief that he had attempted to murder her son, Bran',
+          'Tyrion was held captive in the Eyrie',
+          'Tyrion demanded a trial by combat at the Eyrie, where Bronn fought as his champion and won his freedom.',
+          'Tyrion had given the weapon to Joffrey as a gift, not intending it to be used for harm',
+          "Tyrion was appointed as acting Hand of the King in Eddard’s stead by Tywin Lannister"
+          ],
+
+ "Eddard's Arc" :
+
+         [
+           'Eddard Stark was appointed as Hand of the King by King Robert, who valued his counsel.',
+           'Eddard investigated Jon Arryn’s death, uncovering questions about the parentage of Cersei’s children',
+           "Eddard Stark investigation into Jon Arryn's death led him to question the parentage of Cersei's children.",
+           'Eddard Stark was betrayed by Petyr Baelish, leading to his arrest.'
+         ],
+
+  "Joffrey's Character" :
+
+          [
+            'Joffrey had a fascination with weapons and saw them as symbols of power',
+           "Joffrey’s actions, including his disregard for traditional rights and norms, contributed to the War of the Five Kings",
+           "Joffrey’s desire for power was evident in his interest in symbols like the Iron Throne and the royal crown",
+           'Joffrey ignored a decree from Robert declaring Eddard as regent, showcasing his lust for power',
+            "Joffrey's interest in power extended to symbols like the Iron Throne and the royal crown."
+          ],
+
+  "The Game of Thrones" :
+
+          [
+            'The court is a dangerous and treacherous place.',
+            "Most people at court would betray other people to gain power.",
+           'The king has to prioritize the realm’s well-being over personal desires',
+           'Resilience, intellect, and wit are significant in navigating court politics',
+           'Balancing personal desires with duties to the realm is important.',
+           'Trust is a double-edged sword.'
+          ],
+
+  "The Threat Beyond the Wall" :
+
+          [
+            "The tales are more than just stories.",
+            "The threat is real.",
+            "The court's ignorance can be its downfall.",
+            "We must alert the court to the threat.",
+          ]
+}
