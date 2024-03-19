@@ -32,13 +32,13 @@ Database Creation (create_th_db.py):
 Text is converted into events, stored as dictionaries.
 Each event maps thematic roles to content, with 'Predicate' representing the main verb.
 Example:
-arduino
-Copy code
+
 {
 'Predicate': 'ate',
 'Agent': 'John',
 'Theme': 'an apple'
 }
+
 Data Processing (process_th_db.py):
 
 Raw JSON events are converted to Python dictionaries.
