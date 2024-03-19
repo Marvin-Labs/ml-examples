@@ -142,6 +142,9 @@ class Duologue(Conversation):
         sorted_names = sorted([self.agent1.name, self.agent2.name])
         self.id = f'{sorted_names[0]}+{sorted_names[1]}'
 
+
+        # Here we load the global cg, which will then be fed into each Agent.respond call.
+        # This corresponds to the topic model discussed in the article.
         self.global_cg_path = f'{campaign}/seeds/cgs/global.json'
         if os.path.exists(self.global_cg_path):
             self.cg = eval(open(self.global_cg_path).read())
@@ -165,7 +168,8 @@ class Duologue(Conversation):
       
 
         self.history = []
-        
+
+        # Start a conversation 
         topic = f"how is {self.agent1.name} doing"
         self.agent1.qud = self.agent2.qud = topic
         res2 = f"{self.agent2.name}: Tell me what's on your mind, {self.agent1.name}."
@@ -173,10 +177,6 @@ class Duologue(Conversation):
         res2_named = f"{self.agent2.name.capitalize()}: {res2}"
         self.history.append(res2_named)
         self.agent2.print(res2_named)
-
-        # thats a simpler way to do it:
-        #res2 = f'Hello, {self.agent1.name}!'
-        #self.history = [f"{self.agent2.name}: {res2}"]
 
 
     def run(self):
@@ -384,7 +384,7 @@ class Agent:
                     if B:
                         self.auds.append(B)
 
-                    # Commit AUD to KB. Corresponds to step 2a in the pseudocode
+                    # Commit AUD to KB. Corresponds to step 2a from the pseudocode
                     self.kb += '\n'+ B
                     # TODO: also to shared KB
 
@@ -410,7 +410,7 @@ class Agent:
 
                 # If the current QUD has been resolved and there are unresolved topics in the waitlist,
                 # pick one of them
-                # corresponds to step 2b
+                # Corresponds to step 2b from pseudocode
                 elif self.qud_waitlist:
 
 
@@ -420,7 +420,7 @@ class Agent:
                     self.qud_waitlist.remove(self.qud)
                     self.circling_back = True
 
-                # Step 2c
+                # Step 2c from pseudocode
                 elif self.deduce_counter < self.max_n_deductions:
 
                     self.print('\n\nDeducing implications...\n\n')
@@ -434,7 +434,7 @@ class Agent:
 
                     self.deduce_counter = 0
 
-                    # Step 2d
+                    # Step 2d from pseudocode
                     self.qud = self.pick_topic_from_stm(shared_kb, other_name)
                     self.has_deduced = False
                     self.just_changed_topic = True
