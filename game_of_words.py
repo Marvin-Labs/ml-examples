@@ -1,3 +1,16 @@
+"""
+This is an implementation of the pseudocode from this article:
+
+https://www.linkedin.com/pulse/game-words-episode-ii-topic-management-yugen-omer-korat-zexhf
+
+Read for more details.
+
+Apologies for the conflation of the terms 'QUD' and 'topic'. They are basically the same thing, but used in different contexts.
+
+This code is still work in progress, so it is going to be rough around the edges. Think about it as a draft version, not a final product.
+"""
+
+
 campaign = 'GoW_data'
 agent1_name = 'tyrion'
 agent2_name = 'eddard'
